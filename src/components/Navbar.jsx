@@ -45,8 +45,8 @@ const Navbar = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-8 flex justify-between items-center h-16 sm:h-20">
         <Link to="/" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 rounded-xl bg-black flex items-center justify-center text-white font-black text-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">S</div>
-          <span className="text-lg sm:text-xl font-black uppercase tracking-tight text-black transition-opacity group-hover:opacity-80">SNEAKER<span className="text-gray-500">SHOP</span></span>
+          <div className="w-8 h-8 rounded-xl bg-black flex items-center justify-center text-white font-black text-sm transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">I</div>
+          <span className="text-lg sm:text-xl font-black uppercase tracking-tight text-black transition-opacity group-hover:opacity-80">INVERSIONES <span className="text-gray-500">MYE</span></span>
         </Link>
 
         <div className="hidden md:flex gap-1 items-center">
