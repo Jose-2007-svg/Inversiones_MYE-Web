@@ -50,7 +50,7 @@ const Checkout = () => {
     mensaje += `Quedo atento/a. ¡Gracias!`;
 
     // REEMPLAZA EL 51999999999 POR TU NÚMERO DE WHATSAPP (código país + número)
-    const numeroVendedor = "51999999999"; 
+    const numeroVendedor = "51928358327"; 
     const urlWhatsApp = `https://wa.me/${numeroVendedor}?text=${encodeURIComponent(mensaje)}`;
     window.open(urlWhatsApp, '_blank');
   };
