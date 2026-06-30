@@ -4,7 +4,7 @@ const StoreSection = () => {
   const features = [
     {
       icon: '🚚',
-      title: 'Envío Gratis',
+      title: 'Envío',
       description: 'En compras mayores a S/ 250 dentro de Lima Metropolitana.',
       color: 'from-gray-100 to-white',
       iconBg: 'bg-black text-white',

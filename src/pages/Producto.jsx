@@ -12,9 +12,8 @@ const Producto = () => {
   const [loading, setLoading] = useState(true);
   const [addedToCart, setAddedToCart] = useState(false);
 
-  // Efecto que se dispara cada vez que cambia el ID en la URL
   useEffect(() => {
-    window.scrollTo(0, 0); // Subir la vista arriba al entrar
+    window.scrollTo(0, 0); 
     setLoading(true);
 
     const fetchProductoYRecomendaciones = async () => {
@@ -22,22 +21,18 @@ const Producto = () => {
         const respuesta = await fetch(`https://inversiones-mye.onrender.com/api/zapatillas`);
         const catalogoCompleto = await respuesta.json();
         
-        // 1. Encontrar el producto actual
         const encontrada = catalogoCompleto.find(z => String(z.id) === String(id));
         setZapatilla(encontrada);
         
         if (encontrada) {
-            // Asignar imagen principal
             setImagenActiva(encontrada.foto_principal);
-            // Preseleccionar primera talla
             if(encontrada.tallas && encontrada.tallas.length > 0) {
                 setTalla(typeof encontrada.tallas[0] === 'object' ? encontrada.tallas[0].talla : encontrada.tallas[0]);
             }
 
-            // 2. Extraer recomendaciones (4 productos distintos al actual)
+            // Extraer recomendaciones (excluyendo el producto actual)
             const otras = catalogoCompleto.filter(z => String(z.id) !== String(id));
-            // Desordenar un poco para que se vea dinámico y tomar 4
-            const randomRecomendadas = otras.sort(() => 0.5 - Math.random()).slice(0, 4);
+            const randomRecomendadas = otras.sort(() => 0.5 - Math.random()).slice(0, 5);
             setRecomendaciones(randomRecomendadas);
         }
       } catch (err) { 
@@ -92,7 +87,6 @@ const Producto = () => {
 
   if (!zapatilla) return <div className="text-center py-40">Producto no encontrado</div>;
 
-  // Consolidar todas las fotos (Principal + Galería)
   const todasLasFotos = [zapatilla.foto_principal, ...(zapatilla.galeria || [])].filter(Boolean);
 
   return (
@@ -103,16 +97,13 @@ const Producto = () => {
         {/* Producto Principal */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20">
           
-          {/* Lado Izquierdo: Galería Visual */}
           <div className="flex flex-col gap-4">
-            {/* Imagen Activa (Grande) */}
             <div className="rounded-3xl bg-gray-50 border border-gray-200 p-8 sm:p-14 flex items-center justify-center shadow-sm">
               <img src={imagenActiva} alt={zapatilla.nombre} className="max-h-[500px] w-full object-contain drop-shadow-xl img-zoom transition-all duration-300" />
             </div>
             
-            {/* Miniaturas (Solo se muestran si hay más de 1 foto) */}
             {todasLasFotos.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide">
+              <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 {todasLasFotos.map((foto, idx) => (
                   <button 
                     key={idx} 
@@ -126,7 +117,6 @@ const Producto = () => {
             )}
           </div>
 
-          {/* Lado Derecho: Detalles */}
           <div className="flex flex-col justify-center">
             <p className="text-gray-500 text-xs font-bold uppercase tracking-[0.3em] mb-2">{zapatilla.categoria}</p>
             <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase tracking-tight leading-none mb-4 text-black">{zapatilla.nombre}</h1>
@@ -165,22 +155,28 @@ const Producto = () => {
           </div>
         </div>
 
-        {/* Sección de Recomendaciones */}
+        {/* Sección de Recomendaciones con Carrusel Móvil */}
         {recomendaciones.length > 0 && (
-            <div className="mt-32 border-t border-gray-200 pt-16">
-                <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-black mb-10 text-center">
+            <div className="mt-28 border-t border-gray-200 pt-16">
+                <h3 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-black mb-8 text-left">
                     También te podría <span className="text-gray-400">gustar</span>
                 </h3>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                {/* Contenedor Flex con Scroll Horizontal en móviles y Grid en Desktop */}
+                <div className="flex overflow-x-auto lg:grid lg:grid-cols-4 gap-5 pb-8 snap-x snap-mandatory scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                     {recomendaciones.map((item) => (
-                    <Link to={`/producto/${item.id}`} key={item.id} className="group rounded-3xl overflow-hidden bg-white border border-gray-200 hover:border-black transition-all duration-500 shadow-sm hover:shadow-lg">
-                        <div className="relative p-6 flex justify-center items-center overflow-hidden bg-gray-50">
-                            <img src={item.foto_principal} alt={item.nombre} className="w-full h-40 object-contain img-zoom drop-shadow-md" />
+                    <Link 
+                        to={`/producto/${item.id}`} 
+                        key={item.id} 
+                        className="group flex-none w-[75%] sm:w-[45%] lg:w-auto snap-start rounded-3xl overflow-hidden bg-white border border-gray-200 hover:border-black transition-all duration-500 shadow-sm hover:shadow-lg"
+                    >
+                        <div className="relative p-6 flex justify-center items-center overflow-hidden bg-gray-50 h-56">
+                            <img src={item.foto_principal} alt={item.nombre} className="w-full h-full object-contain img-zoom drop-shadow-md" />
                         </div>
-                        <div className="p-5 pt-4 text-center">
+                        <div className="p-5 pt-4 text-left">
                             <p className="text-gray-500 text-[10px] uppercase tracking-widest mb-1 font-bold">{item.categoria}</p>
-                            <h4 className="text-sm font-bold text-black leading-snug line-clamp-1">{item.nombre}</h4>
+                            <h4 className="text-sm font-bold text-black leading-snug line-clamp-1 mb-4">{item.nombre}</h4>
+                            <span className="text-xs font-black text-white bg-[#25D366] px-3 py-1.5 rounded-full uppercase tracking-widest">Consultar</span>
                         </div>
                     </Link>
                     ))}

@@ -20,7 +20,7 @@ const Footer = () => {
               </span>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              Zapatillas premium de las mejores marcas. Diseño, autenticidad y estilo urbano en cada paso.
+              Zapatillas de la mejor calidad. Diseño, autenticidad y estilo urbano en cada paso.
             </p>
             {/* Social */}
             <div className="flex gap-3 mt-6">
@@ -71,11 +71,6 @@ const Footer = () => {
               <li>
                 <span className="text-gray-400 text-sm flex items-center gap-2">
                   Atención vía WhatsApp
-                </span>
-              </li>
-              <li>
-                <span className="text-gray-400 text-sm flex items-center gap-2">
-                  Asesoría personalizada
                 </span>
               </li>
             </ul>
