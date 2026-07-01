@@ -12,7 +12,7 @@ const StoreSection = () => {
     },
     {
       icon: <IconChecks stroke={1.5} size={32} />,
-      title: '100% Auténtico',
+      title: '100% Confiable',
       description: 'Cada par es verificado por nuestro equipo. Garantizamos originalidad.',
       color: 'from-gray-100 to-white',
       iconBg: 'bg-black text-white',
